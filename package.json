@@ -1,0 +1,33 @@
+{
+  "name": "vuex-persistor",
+  "version": "0.1.0",
+  "description": "A Vuex4, Vue3 and Nuxt - ready plugin that saves and rehydrates the state of your application between page reloads",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shadrqen/vuex-persistor.git"
+  },
+  "keywords": [
+    "vue",
+    "vue2",
+    "vue3",
+    "vuex",
+    "vuex-persist",
+    "vuex-persist-state",
+    "vuex-persisted",
+    "vuex-persistor"
+  ],
+  "author": "shadrqen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shadrqen/vuex-persistor/issues"
+  },
+  "homepage": "https://github.com/shadrqen/vuex-persistor#readme",
+  "devDependencies": {
+    "vue": "^3.2.31",
+    "vuex": "^4.0.2"
+  }
+}
