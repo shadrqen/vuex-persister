@@ -4,7 +4,10 @@
   "description": "A Vuex4, Vue3 and Nuxt - ready plugin that saves and rehydrates the state of your application between page reloads",
   "main": "src/index.ts",
   "scripts": {
-    "test": "npm run test"
+    "lint:js": "eslint --ext \".js,.ts,.vue\" --ignore-path .gitignore .",
+    "lint": "npm run lint:js",
+    "lintfix": "npm run lint:js -- --fix",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
