@@ -1,4 +1,3 @@
-export interface PersistorOptions {
-    key: string,
-    saveState: (key: string, state: {}, storage: Storage) => void
+export interface SaveState<State> {
+    (key: string, state: State, storage: Storage): void
 }
