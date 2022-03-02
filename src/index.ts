@@ -1,17 +1,18 @@
-import { Store } from 'vuex'
-import { PersistorOptions } from './PersistorOptions'
+import { Store, MutationPayload } from 'vuex'
+import { SaveState } from './PersistorOptions'
 
-export class VuexPersistor<State> implements PersistorOptions {
-    public key: string
-    public store: Store<State>
+export const VuexPersistor = <State>(store: Store<State>) : void => {
+  const storage: Storage = window.localStorage
+  const key: string = 'vuex'
 
-    constructor (store: Store<State>) {
-      this.key = 'vuex'
-      this.store = store
-      console.log(this.store)
-    }
+  // called when the store is initialized
+  store.subscribe((mutation: MutationPayload, state: State) => {
+    // called after every mutation.
+    // The mutation comes in the format of `{ type, payload }`.
+    saveState(key, state, storage)
+  })
 
-    public saveState (key: string, state: {}, storage: Storage): void {
-      console.log(key, state, storage)
-    }
+  const saveState: SaveState<State> = (key: string, state: State, storage: Storage) => {
+    storage.setItem(key, JSON.stringify(state))
+  }
 }
