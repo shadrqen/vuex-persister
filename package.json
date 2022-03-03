@@ -42,5 +42,8 @@
     "jest": "^27.5.1",
     "vue": "^3.2.31",
     "vuex": "^4.0.2"
+  },
+  "dependencies": {
+    "deepmerge": "^4.2.2"
   }
 }
