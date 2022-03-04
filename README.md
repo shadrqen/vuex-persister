@@ -98,6 +98,8 @@ Creates an instance of the plugin while accepting specific options as below:
 - `key <String>`: The key with which to store the state in the specified storage. Defaults to `vuex`.
 - `overwrite <Boolean>`: Whether to overwrite the state with the saved state instead of merging the two objects with `deepmerge`. Defaults to `false`.
 - `storage <Object>`: The storage to use. Should be either `localStorage` or `sessionStorage`. Defaults to `localStorage`.
+- `getState <Function>`: A function that is called to retrieve a previously persisted state. Defaults to using `storage`'s `getItem` function.
+- `saveState <Function>`: A function that is called to persist the given state. Defaults to using `storage`'s `setItem` function.
 
 
 ### Example usage
