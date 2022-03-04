@@ -1,6 +1,6 @@
 import { Store } from 'vuex'
 
-export type GetStateUnion<State> = null | State
+export type GetSavedStateUnion<State> = null | State
 
 export interface PersistorOptions<State> {
     key?: string,
@@ -11,8 +11,8 @@ export interface PersistorOptions<State> {
     saveState?: (key: string, state: State, storage: Storage) => void
 }
 
-export interface GetState<State> {
-    (key: string, storage: Storage): GetStateUnion<State>
+export interface GetSavedState<State> {
+    (key: string, storage: Storage): GetSavedStateUnion<State>
 }
 
 export interface RehydrateState<State> {
