@@ -1,6 +1,7 @@
 {
-  "name": "vuex-persistor",
+  "name": "vuex-persister",
   "version": "0.5.0",
+  "private": false,
   "description": "A Vuex4, Vue3 and Nuxt - ready plugin that saves and rehydrates the state of your application between page reloads",
   "main": "src/index.ts",
   "scripts": {
@@ -22,7 +23,7 @@
     "vuex-persist",
     "vuex-persist-state",
     "vuex-persisted",
-    "vuex-persistor"
+    "vuex-persister"
   ],
   "author": "shadrqen",
   "license": "MIT",

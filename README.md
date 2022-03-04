@@ -1,27 +1,27 @@
-# vuex-persistor
+# vuex-persister
 
 A [Vuex4](https://vuex.vuejs.org), [Vue3](https://vuejs.org) and [Nuxt](https://nuxtjs.org/) - ready plugin that saves and rehydrates the state of your application between page reloads
 <br /> <br />
 
-[![GitHub stars](https://img.shields.io/github/stars/shadrqen/vuex-persistor.svg?style=social&label=%20vuex-persistor)](http://github.com/shadrqen/vuex-persistor)
-[![npm](https://img.shields.io/npm/v/vuex-persistor.svg?colorB=dd1100)](http://npmjs.com/vuex-persistor)
-[![npm](https://img.shields.io/npm/dw/vuex-persistor.svg?colorB=fc4f4f)](http://npmjs.com/vuex-persistor)
-[![license](https://img.shields.io/github/license/shadrqen/vuex-persistor.svg)]()
-![Build Status](https://github.com/shadrqen/vuex-persistor/actions/workflows/ci.yml/badge.svg?branch=main)
-[![umd:min:gzip](https://img.badgesize.io/https://unpkg.com/vuex-persistor?compression=gzip&label=umd:min:gzip)](https://unpkg.com/vuex-persistor)
-[![umd:min:brotli](https://img.badgesize.io/https://cdn.jsdelivr.net/npm/vuex-persistor?compression=brotli&label=umd:min:brotli)](https://cdn.jsdelivr.net/npm/vuex-persistor)
+[![GitHub stars](https://img.shields.io/github/stars/shadrqen/vuex-persister.svg?style=social&label=%20vuex-persister)](http://github.com/shadrqen/vuex-persister)
+[![npm](https://img.shields.io/npm/v/vuex-persister.svg?colorB=dd1100)](http://npmjs.com/vuex-persister)
+[![npm](https://img.shields.io/npm/dw/vuex-persister.svg?colorB=fc4f4f)](http://npmjs.com/vuex-persister)
+[![license](https://img.shields.io/github/license/shadrqen/vuex-persister.svg)]()
+![Build Status](https://github.com/shadrqen/vuex-persister/actions/workflows/ci.yml/badge.svg?branch=main)
+[![umd:min:gzip](https://img.badgesize.io/https://unpkg.com/vuex-persister?compression=gzip&label=umd:min:gzip)](https://unpkg.com/vuex-persister)
+[![umd:min:brotli](https://img.badgesize.io/https://cdn.jsdelivr.net/npm/vuex-persister?compression=brotli&label=umd:min:brotli)](https://cdn.jsdelivr.net/npm/vuex-persister)
 
 
 ## Installation
 
 ```bash
-npm install --save vuex-persistor
+npm install --save vuex-persister
 ```
 
 or
 
 ```bash
-yarn add vuex-persistor
+yarn add vuex-persister
 ```
 
 
@@ -29,18 +29,18 @@ yarn add vuex-persistor
 
 ### Import the package
 ```js
-import VuexPersistor from 'vuex-persistor'
+import VuexPersister from 'vuex-persister'
 ```
 
-### Instantiate the VuexPersistor instance
+### Instantiate the VuexPersister instance
 ```js
 // JavaScript
-const vuexPersistor = new VuexPersistor({
+const vuexPersistor = new VuexPersister({
     // ...your options
 })
 
 // Typescript
-const vuexPersistor = new VuexPersistor<State>({
+const vuexPersistor = new VuexPersister<State>({
     // ...your options
 })
 ```
@@ -70,11 +70,11 @@ const store = createStore<State>({
 
 ### Define plugin
 ```js
-// ~/plugins/vuex-persistor.js
-import VuexPersistor from 'vuex-persistor'
+// ~/plugins/vuex-persister.js
+import VuexPersister from 'vuex-persister'
 
 export default ({ store }) => {
-  new VuexPersistor({
+  new VuexPersister({
     // ...your options
   }).persist(store)
 }
@@ -85,14 +85,14 @@ export default ({ store }) => {
 // ~nuxt.config.js
 export default {
   /* ... other options here */
-   plugins: [{ src: '~/plugins/vuex-persistor.js', ssr: false }],
+   plugins: [{ src: '~/plugins/vuex-persister.js', ssr: false }],
 }
 ```
 
 
 ## API
 
-### ``` new VuexPersistor({ /* your options */ })```
+### ``` new VuexPersister({ /* your options */ })```
 
 Creates an instance of the plugin while accepting specific options as below:
 - `key <String>`: The key with which to store the state in the specified storage. Defaults to `vuex`.
@@ -102,8 +102,8 @@ Creates an instance of the plugin while accepting specific options as below:
 ### Example usage
 ```js
 // JavaScript
-new VuexPersistor({
-  key: 'random',
+new VuexPersister({
+  key: 'my_key',
   overwrite: true,
   storage: sessionStorage
 })
