@@ -1,11 +1,11 @@
 import merge from 'deepmerge'
 import { Store, MutationPayload, Plugin } from 'vuex'
-import { PersistorOptions, GetState, GetStateUnion, SaveState, RehydrateState } from './PersistorOptions'
+import { PersistorOptions, GetSavedState, GetSavedStateUnion, SaveState, RehydrateState } from './PersistorOptions'
 
 /**
  * The main vuex persistor class
  */
-export class VuexPersistor<State> implements PersistorOptions<State> {
+export default class VuexPersistor<State> implements PersistorOptions<State> {
     key: string
     persist: Plugin<State>
     storage: Storage
@@ -17,7 +17,7 @@ export class VuexPersistor<State> implements PersistorOptions<State> {
       this.storage = options && options.storage ? options.storage : window.localStorage
       this.persist = (store: Store<State>) : void => {
         this.rehydrateState(this.overwrite, store, this.key, this.storage)
-        this.subscribe(store)((mutation: MutationPayload, state: State) => {
+        this.subscriber(store)((mutation: MutationPayload, state: State) => {
           this.saveState(this.key, state, this.storage)
         })
       }
@@ -60,10 +60,10 @@ export class VuexPersistor<State> implements PersistorOptions<State> {
      * @param {Storage} storage - The storage to which to save the state
      * @returns {object|undefined} - The saved state
      */
-    getSavedState: GetState<State> = (key: string, storage: Storage) : GetStateUnion<State> => {
+    getSavedState: GetSavedState<State> = (key: string, storage: Storage) : GetSavedStateUnion<State> => {
       const STATE_VALUE = storage.getItem(key)
       try {
-        let STATE: GetStateUnion<State>
+        let STATE: GetSavedStateUnion<State>
         switch (typeof STATE_VALUE) {
           case 'string':
             STATE = JSON.parse(STATE_VALUE)
@@ -86,5 +86,5 @@ export class VuexPersistor<State> implements PersistorOptions<State> {
      * @param {object} store - The store instance
      * @returns {function} - The store.subscribe function that is called after every mutation
      */
-    private subscribe = (store: Store<State>) => (handler: (mutation: MutationPayload, state: State) => any) => store.subscribe(handler)
+    private subscriber = (store: Store<State>) => (handler: (mutation: MutationPayload, state: State) => any) => store.subscribe(handler)
 }
