@@ -1,6 +1,6 @@
 import merge from 'deepmerge'
 import { Store, MutationPayload, Plugin } from 'vuex'
-import { PersisterOptions, GetSavedState, GetSavedStateUnion, SaveState, RehydrateState } from './PersistorOptions'
+import { PersisterOptions, GetSavedState, GetSavedStateUnion, SaveState, RehydrateState } from './PersisterOptions'
 
 /**
  * The main vuex persister class
