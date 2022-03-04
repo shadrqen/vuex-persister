@@ -1,20 +1,28 @@
 import merge from 'deepmerge'
 import { Store, MutationPayload, Plugin } from 'vuex'
-import { PersistorOptions, GetSavedState, GetSavedStateUnion, SaveState, RehydrateState } from './PersistorOptions'
+import { PersisterOptions, GetSavedState, GetSavedStateUnion, SaveState, RehydrateState } from './PersistorOptions'
 
 /**
- * The main vuex persistor class
+ * The main vuex persister class
  */
-export default class VuexPersistor<State> implements PersistorOptions<State> {
+export default class VuexPersister<State> implements PersisterOptions<State> {
     key: string
     persist: Plugin<State>
     storage: Storage
     overwrite: Boolean
+    getState: (key: string, storage: Storage) => GetSavedStateUnion<State>
+    saveState: (key: string, state: State, storage: Storage) => void
 
-    constructor (options?: PersistorOptions<State>) {
+    constructor (options?: PersisterOptions<State>) {
       this.key = options && options.key ? options.key : 'vuex'
       this.overwrite = options && options.overwrite ? options.overwrite : false
       this.storage = options && options.storage ? options.storage : window.localStorage
+      this.getState = options && options.getState
+        ? options.getState
+        : this.getSavedState
+      this.saveState = options && options.saveState
+        ? this.saveCurrentState
+        : this.saveCurrentState
       this.persist = (store: Store<State>) : void => {
         this.rehydrateState(this.overwrite, store, this.key, this.storage)
         this.subscriber(store)((mutation: MutationPayload, state: State) => {
@@ -30,7 +38,7 @@ export default class VuexPersistor<State> implements PersistorOptions<State> {
      * @param {Storage} storage - The storage to which to save the state
      * @returns {void}
      */
-    saveState: SaveState<State> = (key: string, state: State, storage: Storage) : void => {
+    private saveCurrentState: SaveState<State> = (key: string, state: State, storage: Storage) : void => {
       storage.setItem(key, JSON.stringify(state))
     }
 
@@ -60,7 +68,7 @@ export default class VuexPersistor<State> implements PersistorOptions<State> {
      * @param {Storage} storage - The storage to which to save the state
      * @returns {object|undefined} - The saved state
      */
-    getSavedState: GetSavedState<State> = (key: string, storage: Storage) : GetSavedStateUnion<State> => {
+    private getSavedState: GetSavedState<State> = (key: string, storage: Storage) : GetSavedStateUnion<State> => {
       const STATE_VALUE = storage.getItem(key)
       try {
         let STATE: GetSavedStateUnion<State>

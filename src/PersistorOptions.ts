@@ -2,12 +2,12 @@ import { Store } from 'vuex'
 
 export type GetSavedStateUnion<State> = null | State
 
-export interface PersistorOptions<State> {
+export interface PersisterOptions<State> {
     key?: string,
     overwrite?: Boolean,
     storage?: Storage,
     persist?: (store: Store<State>) => void
-    getSavedState?: (key: string, storage: Storage) => void
+    getState?: (key: string, storage: Storage) => GetSavedStateUnion<State>
     saveState?: (key: string, state: State, storage: Storage) => void
 }
 
