@@ -1,7 +1,7 @@
 # vuex-persistor
 
 A [Vuex4](https://vuex.vuejs.org), [Vue3](https://vuejs.org) and [Nuxt](https://nuxtjs.org/) - ready plugin that saves and rehydrates the state of your application between page reloads
-
+<br /> <br />
 
 [![GitHub stars](https://img.shields.io/github/stars/shadrqen/vuex-persistor.svg?style=social&label=%20vuex-persistor)](http://github.com/shadrqen/vuex-persistor)
 [![npm](https://img.shields.io/npm/v/vuex-persistor.svg?colorB=dd1100)](http://npmjs.com/vuex-persistor)
@@ -102,7 +102,7 @@ Creates an instance of the plugin while accepting specific options as below:
 ### Example usage
 ```js
 // JavaScript
-const vuexPersistor = new VuexPersistor({
+new VuexPersistor({
   key: 'random',
   overwrite: true,
   storage: sessionStorage
