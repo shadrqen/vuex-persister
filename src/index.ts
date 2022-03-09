@@ -14,10 +14,10 @@ export default class VuexPersister<State> implements PersisterOptions<State> {
     saveState: (key: string, state: State, storage: Storage) => void
 
     constructor (options?: PersisterOptions<State>) {
-      this.key = options && options.key ? options.key : 'vuex'
-      this.overwrite = options && options.overwrite ? options.overwrite : false
-      this.storage = options && options.storage ? options.storage : window.localStorage
-      this.getState = options && options.getState
+      this.key = options?.key ? options.key : 'vuex'
+      this.overwrite = options?.overwrite ? options.overwrite : false
+      this.storage = options?.storage ? options.storage : window.localStorage
+      this.getState = options?.getState
         ? options.getState
         : this.getSavedState
       this.saveState = options && options.saveState
