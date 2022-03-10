@@ -1,6 +1,6 @@
 # vuex-persister
 
-A [Vuex4](https://vuex.vuejs.org), [Vue3](https://vuejs.org) and [Nuxt](https://nuxtjs.org/) - ready plugin that saves and rehydrates the state of your application between page reloads
+Smallest and fastest [Vuex4](https://vuex.vuejs.org), [Vue3](https://vuejs.org) and [Nuxt](https://nuxtjs.org/) - ready plugin that saves and rehydrates the state of your application between page reloads
 <br /> <br />
 
 [![GitHub stars](https://img.shields.io/github/stars/shadrqen/vuex-persister.svg?style=social&label=%20vuex-persister)](http://github.com/shadrqen/vuex-persister)
@@ -49,19 +49,15 @@ const vuexPersistor = new VuexPersister<State>({
 ```js
 // JavaScript
 const store = createStore({
-  state: {/* ...*/},
-  getters: {/* ...*/},
-  mutations: {/* ...*/},
-  actions: {/* ...*/},
+  state: {/* ... */},
+  // ...
   plugins: [vuexPersistor.persist] // integrate the plugin
 })
 
 // TypeScript
 const store = createStore<State>({
-  state: {/* ...*/},
-  getters: {/* ...*/},
-  mutations: {/* ...*/},
-  actions: {/* ...*/},
+    state: {/* ... */},
+    // ...
   plugins: [vuexPersistor.persist] // integrate the plugin
 })
 ```
@@ -97,7 +93,8 @@ export default {
 Creates an instance of the plugin while accepting specific options as below:
 - `key <String>`: The key with which to store the state in the specified storage. Defaults to `vuex`.
 - `overwrite <Boolean>`: Whether to overwrite the state with the saved state instead of merging the two objects with `deepmerge`. Defaults to `false`.
-- `storage <Object>`: The storage to use. Should be either `localStorage` or `sessionStorage`. Defaults to `localStorage`.
+- `storage <Object>`: The storage to use. Should be either `localStorage` or `sessionStorage`. Defaults to `localStorage`. Can also define own functions
+such as with the SecureLocalStorage Obfuscation below
 - `getState <Function>`: A function that is called to retrieve a previously persisted state. Defaults to using `storage`'s `getItem` function.
 - `saveState <Function>`: A function that is called to persist the given state. Defaults to using `storage`'s `setItem` function.
 
@@ -120,33 +117,28 @@ You can use it in conjunction with other security measures.
 
 ```js
 // first install the secure-ls package
-import SecureLocalStorage from 'secure-ls'
+import SecureLS from 'secure-ls'
 import VuexPersister from 'vuex-persister'
-const SECURE_LOCAL_STORAGE = new SecureLocalStorage({ encodingType: 'aes' })
+const SecureLocalStorage = new SecureLS({ encodingType: 'aes' }) // AES encryption and data compression
+/* Can also accept other options as below:
+* new SecureLS({encodingType: '', isCompression: false})
+* new SecureLS({isCompression: false})
+* SecureLS({encodingType: 'rc4', isCompression: false})
+* new SecureLS({encodingType: 'rc4', isCompression: false, encryptionSecret: 's3cr3tPa$$w0rd@123'})
+* More details are found here (https://www.npmjs.com/package/secure-ls) */
 
 // JavaScript
-const vuexPersister = new VuexPersister({
+const vuexPersister = new VuexPersister({ // new VuexPersister<State> with TypeScript
   storage: {
-    getItem: (key) => SECURE_LOCAL_STORAGE.get(key),
-    setItem: (key, value) => SECURE_LOCAL_STORAGE.set(key, value),
-    removeItem: (key) => SECURE_LOCAL_STORAGE.remove(key),
-    length: SECURE_LOCAL_STORAGE.getAllKeys().length,
-    clear: () => SECURE_LOCAL_STORAGE.clear(),
+    getItem: (key) => SecureLocalStorage.get(key),
+    setItem: (key, value) => SecureLocalStorage.set(key, value),
+    removeItem: (key) => SecureLocalStorage.remove(key),
+    length: SecureLocalStorage.getAllKeys().length,
+    clear: () => SecureLocalStorage.clear(),
     key: (key: number) => null
   }
 })
 
-// TypeScript
-const vuexPersister = new VuexPersister<State>({
-  storage: {
-    getItem: (key) => SECURE_LOCAL_STORAGE.get(key),
-    setItem: (key, value) => SECURE_LOCAL_STORAGE.set(key, value),
-    removeItem: (key) => SECURE_LOCAL_STORAGE.remove(key),
-    length: SECURE_LOCAL_STORAGE.getAllKeys().length,
-    clear: () => SECURE_LOCAL_STORAGE.clear(),
-    key: (key: number) => null
-  }
-})
 ```
 
 
