@@ -35,12 +35,12 @@ import VuexPersister from 'vuex-persister'
 ### Instantiate the VuexPersister instance
 ```js
 // JavaScript
-const vuexPersistor = new VuexPersister({
+const vuexPersister = new VuexPersister({
     // ...your options
 })
 
 // Typescript
-const vuexPersistor = new VuexPersister<State>({
+const vuexPersister = new VuexPersister<State>({
     // ...your options
 })
 ```
@@ -51,14 +51,14 @@ const vuexPersistor = new VuexPersister<State>({
 const store = createStore({
   state: {/* ... */},
   // ...
-  plugins: [vuexPersistor.persist] // integrate the plugin
+  plugins: [vuexPersister.persist] // integrate the plugin
 })
 
 // TypeScript
 const store = createStore<State>({
     state: {/* ... */},
     // ...
-  plugins: [vuexPersistor.persist] // integrate the plugin
+  plugins: [vuexPersister.persist] // integrate the plugin
 })
 ```
 
@@ -105,7 +105,26 @@ such as with the SecureLocalStorage Obfuscation below
 new VuexPersister({
   key: 'my_key',
   overwrite: true,
-  storage: sessionStorage
+  storage: sessionStorage // localStorage is the default here
+})
+```
+
+## Cookies
+You can also use cookies if localStorage/sessionStorage is not ideal.
+
+```js
+// install js-cookie and then import
+import Cookies from 'js-cookie'
+
+const vuexPersister = new VuexPersister({ // new VuexPersister<State>({ (for TypeScript)
+    storage: {
+        getItem: (key) => Cookies.get(key),
+        setItem: (key, value) => Cookies.set(key, value, { secure: true }),
+        removeItem: (key) => Cookies.remove(key),
+        length: Object.keys(Cookies.get()).length,
+        clear: () => Cookies.remove(),
+        key: (key: number) => null
+    }
 })
 ```
 

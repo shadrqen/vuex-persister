@@ -32,17 +32,6 @@ export default class VuexPersister<State> implements PersisterOptions<State> {
     }
 
     /**
-     * Saves the state on the storage
-     * @param {string} key - The storage key
-     * @param {State} state - The state to save
-     * @param {Storage} storage - The storage to which to save the state
-     * @returns {void}
-     */
-    private saveCurrentState: SaveState<State> = (key: string, state: State, storage: Storage) : void => {
-      storage.setItem(key, JSON.stringify(state))
-    }
-
-    /**
      * Rehydrates the state whenever there is a saved state
      * @param {boolean} overwrite - Whether to overwrite existing state or not
      * @param {Store} store - The store instance
@@ -60,6 +49,17 @@ export default class VuexPersister<State> implements PersisterOptions<State> {
           })
         )
       }
+    }
+
+    /**
+     * Saves the state on the storage
+     * @param {string} key - The storage key
+     * @param {State} state - The state to save
+     * @param {Storage} storage - The storage to which to save the state
+     * @returns {void}
+     */
+    private saveCurrentState: SaveState<State> = (key: string, state: State, storage: Storage) : void => {
+      storage.setItem(key, JSON.stringify(state))
     }
 
     /**
