@@ -5,14 +5,16 @@ module.exports = {
     jest: true
   },
   extends: [
+    'plugin:vue/essential',
     'standard'
   ],
-  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 12,
+    parser: '@typescript-eslint/parser',
     sourceType: 'module'
   },
   plugins: [
+    'vue',
     '@typescript-eslint'
   ],
   rules: {

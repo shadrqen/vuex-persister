@@ -1,6 +1,6 @@
 {
   "name": "vuex-persister",
-  "version": "0.5.0",
+  "version": "1.0.0-alpha.1",
   "private": false,
   "description": "A Vuex4, Vue3 and Nuxt - ready plugin that saves and rehydrates the state of your application between page reloads",
   "main": "src/index.ts",
@@ -32,17 +32,21 @@
   },
   "homepage": "https://github.com/shadrqen/vuex-persistor#readme",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.13.0",
-    "@typescript-eslint/parser": "^5.13.0",
+    "@typescript-eslint/eslint-plugin": "^5.14.0",
+    "@typescript-eslint/parser": "^5.14.0",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "eslint-plugin-vue": "^8.5.0",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "vue": "^3.2.31",
     "vuex": "^4.0.2"
+  },
+  "peerDependencies": {
+    "vuex": "^3.0 || ^4.0.0"
   },
   "dependencies": {
     "deepmerge": "^4.2.2"
