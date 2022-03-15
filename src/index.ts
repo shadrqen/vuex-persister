@@ -16,7 +16,7 @@ export default class VuexPersister<State> implements PersisterOptions<State> {
     constructor (options?: PersisterOptions<State>) {
       this.key = options?.key ? options.key : 'vuex'
       this.overwrite = options?.overwrite ? options.overwrite : false
-      this.storage = options?.storage ? options.storage : window.localStorage
+      this.storage = options?.storage ? options.storage : window?.localStorage ?? localStorage
       this.getState = options?.getState
         ? options.getState
         : this.getSavedState
@@ -39,7 +39,7 @@ export default class VuexPersister<State> implements PersisterOptions<State> {
      * @param {Storage} storage - The storage instance
      * @return {void}
      */
-    rehydrateState :RehydrateState<State> = (overwrite: Boolean, store: Store<State>, key: string, storage: Storage) : void => {
+    rehydrateState: RehydrateState<State> = (overwrite: Boolean, store: Store<State>, key: string, storage: Storage) : void => {
       const SAVED_STATE = this.getSavedState(key, storage)
       if (SAVED_STATE) {
         store.replaceState(this.overwrite
