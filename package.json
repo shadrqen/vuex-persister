@@ -23,7 +23,8 @@
     "vuex-persist",
     "vuex-persist-state",
     "vuex-persisted",
-    "vuex-persister"
+    "vuex-persister",
+    "how to persist vuex state"
   ],
   "author": "shadrqen",
   "license": "MIT",
