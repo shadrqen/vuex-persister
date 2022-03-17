@@ -18,7 +18,7 @@ const store = createStore<RootState>({
   plugins: [vuexPersister.persist]
 })
 
-describe('Default storage -> LocalStorage', () => {
+describe('Custom storage -> sessionStorage', () => {
   it('Should persist state', () => {
     store.commit('INCREMENT_COUNT')
     const PERSISTED_STORE: RootState = JSON.parse(vuexPersister.storage.getItem('vuex') as string)
