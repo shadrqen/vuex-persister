@@ -92,11 +92,14 @@ export default {
 
 Creates an instance of the plugin while accepting specific options as below:
 - `key <String>`: The key with which to store the state in the specified storage. Defaults to `vuex`.
+- `statesToPersist <String[]>`: The specific states that needs to be persisted. Use dot notation for moduled states e.g. `user.name`.
+Defaults to an empty array and saves all objects in the state instance.
 - `overwrite <Boolean>`: Whether to overwrite the state with the saved state instead of merging the two objects with `deepmerge`. Defaults to `false`.
 - `storage <Object>`: The storage to use. Should be either `localStorage` or `sessionStorage`. Defaults to `localStorage`. Can also define own functions
 such as with the SecureLocalStorage Obfuscation below
 - `getState <Function>`: A function that is called to retrieve a previously persisted state. Defaults to using `storage`'s `getItem` function.
 - `saveState <Function>`: A function that is called to persist the given state. Defaults to using `storage`'s `setItem` function.
+- `reducer <Function>`: A function that is called to specify the states to persist. Defaults to include the whole state.
 
 
 ### Example usage

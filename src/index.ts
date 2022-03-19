@@ -7,29 +7,26 @@ import { PersisterOptions, GetSavedState, GetSavedStateUnion, SaveState, Rehydra
  */
 export default class VuexPersister<State> implements PersisterOptions<State> {
   key: string
-  pathModule: string[]
+  statesToPersist: string[]
   persist: Plugin<State>
   storage: Storage
   overwrite: boolean
   getState: (key: string, storage: Storage) => GetSavedStateUnion<State>
   saveState: (key: string, state: State, storage: Storage) => void
-  reducer: (pathModule: string[], state: State) => any
+  reducer: (statesToPersist: string[], state: State) => any
 
   constructor (options?: PersisterOptions<State>) {
     this.key = options?.key ?? 'vuex'
-    this.pathModule = options?.pathModule ?? []
+    this.statesToPersist = options?.statesToPersist ?? []
     this.overwrite = options?.overwrite ?? false
     this.storage = options?.storage ?? (window?.localStorage ?? localStorage)
     this.getState = options?.getState ?? this.getSavedState
-    this.saveState = options && options.saveState
-      ? this.saveCurrentState
-      : this.saveCurrentState
+    this.saveState = options?.saveState ?? this.saveCurrentState
     this.reducer = options?.reducer ?? this.stateReducer
     this.persist = (store: Store<State>) : void => {
       this.rehydrateState(this.overwrite, store, this.key, this.storage)
       this.subscriber(store)((mutation: MutationPayload, state: State) => {
-        console.log(this.reducer(this.pathModule, state), this.pathModule)
-        this.saveState(this.key, this.reducer(this.pathModule, state), this.storage)
+        this.saveState(this.key, this.reducer(this.statesToPersist, state), this.storage)
       })
     }
   }
@@ -92,13 +89,52 @@ export default class VuexPersister<State> implements PersisterOptions<State> {
     }
   }
 
-  private stateReducer = (pathModule: string[], state: State) =>
-    pathModule.length > 0
-      ? pathModule.reduce((a, i) => {
-        console.log(a, i)
-        return a
-      })
-      : state
+  /**
+   * Returns the state to persist based on specified states to be persisted
+   * @param statesToPersist - An array of states to be persisted
+   * @param state - The existing state
+   * @returns {State} - The state to be persisted
+   */
+  private stateReducer = (statesToPersist: string[], state: State) => statesToPersist.length > 0
+    ? statesToPersist.length === 1
+      ? this.reducedStatePair(statesToPersist[0], state)
+      : statesToPersist.reduce((prev: string, curr: string) => merge(this.reducedStatePair(prev, state),
+        this.reducedStatePair(curr, state)) as any)
+    : state
+
+  /**
+   * Creates a key-value pair of state objects, based on the specified states to save
+   * @param stateKey - The specified key in the state that needs to be persisted
+   * @param state - The existing state
+   * @return {object} - The state key-value pair that will be persisted
+   */
+  private reducedStatePair = (stateKey: string, state: State) => {
+    return { [this.reducedStateKey(stateKey)]: this.reducedStateValue(stateKey, state) }
+  }
+
+  /**
+   * Returns the key for the state to be persisted
+   * @param targetState - Target state to be persisted
+   * @return {string} -The state key (to be persisted)
+   */
+  private reducedStateKey = (targetState: string): string => /\./.test(targetState)
+    ? targetState.split('.')[0]
+    : targetState
+
+  /**
+   * Returns the value for the state key to be persisted
+   * @param targetState - Target state to be persisted
+   * @param state - Existing state
+   * @return {any} - The state value to be persisted
+   */
+  private reducedStateValue = (targetState: string, state: any): any => {
+    if (/\./.test(targetState)) {
+      const splitPathModule: string[] = targetState.split('.')
+      return { [splitPathModule[1]]: state[splitPathModule[0]][splitPathModule[1]] }
+    } else {
+      return state[targetState]
+    }
+  }
 
   /**
    * Exposes hooks for each mutation - called after every mutation

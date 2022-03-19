@@ -4,13 +4,13 @@ export type GetSavedStateUnion<State> = null | State
 
 export interface PersisterOptions<State> {
     key?: string,
-    pathModule?: string[],
+    statesToPersist?: string[],
     overwrite?: boolean,
     storage?: Storage,
     persist?: (store: Store<State>) => void
     getState?: (key: string, storage: Storage) => GetSavedStateUnion<State>
     saveState?: (key: string, state: State, storage: Storage) => void
-    reducer?: (pathModule: string[], state: State) => any
+    reducer?: (statesToPersist: string[], state: State) => any
 }
 
 export interface GetSavedState<State> {
