@@ -1,8 +1,12 @@
+import { createApp } from 'vue'
 import { RootState } from './types'
-import { createStore } from 'vuex'
+import Vuex, { createStore } from 'vuex'
 import VuexPersister from '../src'
 import { state } from './store/state'
 import { mutations } from './store/mutations'
+
+// @ts-ignore
+createApp({}).use(Vuex)
 
 const vuexPersister = new VuexPersister<RootState>({
   storage: sessionStorage
