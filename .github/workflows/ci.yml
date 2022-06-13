@@ -13,10 +13,10 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies 👨🏻‍💻
-        run: npm ci --prefer-offline --no-audit
+        run: yarn install --frozen-lockfile --prefer-offline
 
       - name: Run linter 👀
-        run: npm run lint
+        run: yarn lint
 
       - name: Run tests 🧪
-        run: npm run test
+        run: yarn test
